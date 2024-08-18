@@ -1,7 +1,7 @@
 // // controllers/userController.js
-// const User = require('../models/User');
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcryptjs');
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 // // Register a new user
 // exports.registerUser = async (req, res) => {
@@ -74,11 +74,13 @@
 // };
 
 
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET || "jackmack32@19%$##@";
 
 // Register a new user
 exports.registerUser = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
+    console.log(jwtSecret,'secret');
+    
 
     try {
         let user = await User.findOne({ email });
@@ -87,7 +89,7 @@ exports.registerUser = async (req, res) => {
         }
 
         user = new User({
-            username,
+            // username,
             email,
             password
         });
@@ -100,7 +102,8 @@ exports.registerUser = async (req, res) => {
 
         res.status(201).json({ token });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Error while registering user",error);
+        res.status(500).json({ message: 'Server error', error:error });
     }
 };
 
@@ -125,7 +128,8 @@ exports.loginUser = async (req, res) => {
 
         res.json({ token });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Error while logging in",error);
+        res.status(500).json({ message: 'Server error', error:error });
     }
 };
 
@@ -142,6 +146,7 @@ exports.getUserProfile = async (req, res) => {
 
         res.json(user);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Error getting profile",error)
+        res.status(500).json({ message: 'Server error', error:error });
     }
 };
