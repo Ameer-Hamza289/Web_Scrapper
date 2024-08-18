@@ -6,6 +6,7 @@ import DocumentPage from './pages/DocumentPage';
 import MainPage from './pages/MainPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import DisplayResult from './pages/DisplayResult';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/document" element={<DocumentPage />} />
         <Route path="/main" element={<MainPage />} />
+        <Route path='/results' element = {<DisplayResult/>}/>
       </Routes>
       <Footer />
     </Router>
