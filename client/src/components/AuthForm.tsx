@@ -21,11 +21,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
       if (isLogin) {
         const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
         console.log('Logged in:', response.data);
+        localStorage.setItem('authToken', response.data.token);
         navigate("/main")
         // Handle successful login, e.g., store token, redirect, etc.
       } else {
         const response = await axios.post('http://localhost:5000/api/auth/register', { email, password });
         console.log('Signed up:', response.data);
+        localStorage.setItem('authToken', response.data.token);
         // Handle successful signup, e.g., store token, redirect, etc.
         navigate("/main")
       }
